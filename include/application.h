@@ -20,7 +20,7 @@ enum EnGameScreen
     GAME_SCREEN_GRID
 };
 
-struct StApplication
+struct StApplication                     
 {
     SDL_Window * window;
     SDL_Surface * surface;

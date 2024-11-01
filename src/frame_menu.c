@@ -1,23 +1,15 @@
-#include <SDL2/SDL_ttf.h>
-
 #include "application.h"
-#include "types.h"
 
-void frameMenu()
+extern void drawingMidpoint(void);
+
+void frameMenu(void)
 {
-    if (!TTF_Init())
-    {
-        printf("TTF_Init failed\n");
-        application._is_playing = FALSE;
-        return;
-    }
-    application.font = TTF_OpenFont("./resoutces/font.ttf", 24);
-    if (application.font == NULL) 
-    {
-        printf("Failed to load font! TTF_Error: %s\n", TTF_GetError());
-        application._is_playing = FALSE;
-        return;
-    }
-    application.surface = SDL_GetWindowSurface(application.window);
+    drawingMidpoint();
+    SDL_Surface * text_surface = TTF_RenderText_Solid(application.font, "Play", (SDL_Color) {255, 0, 0});
+    SDL_BlitSurface(text_surface, NULL, application.surface, 
+                    (SDL_Rect *) & (SDL_Rect) {(application.surface->w - text_surface->w) / 2,
+                    application.surface->h / 2 - text_surface->h,
+                    application.surface->w,
+                    application.surface->h});
     return;
 }
