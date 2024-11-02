@@ -2,7 +2,7 @@
 
 #include "application.h"
 
-int main()
+int main(int, char **)
 {
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS))
     {
