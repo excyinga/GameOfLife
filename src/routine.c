@@ -30,7 +30,6 @@ int main()
         return 1;
     }
     SDL_Event event;
-    extern void frameMenu(); 
     for (; application._is_playing;)
     {
         while (SDL_PollEvent(&event))
