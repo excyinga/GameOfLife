@@ -15,13 +15,13 @@ void drawMidpoint(void)
     }
     return; 
 }
-/* void drawOutlineOfSurface(SDL_Rect rect, SDL_Color color)
+void drawOutlineOfSurface(SDL_Rect rect, SDL_Color color)
 {
     int x = 0;
     for (; x < rect.w; x++)
     {
-        ((int *) application.surface->pixels)[application.surface->pitch / 4 * rect.y + rect.x + x] = (int) color;
-        ((int *) application.surface->pixels)[application.surface->pitch / 4 * (rect.y * rect.h - 1) + rect.x + x] = (int) color;
+        ((int *) application.surface->pixels)[application.surface->pitch / 4 * rect.y + rect.x + x] = * (int *) &color;
+        ((int *) application.surface->pixels)[application.surface->pitch / 4 * (rect.y + rect.h - 1) + rect.x + x] = * (int *) &color;
     }
     return;
-} */
+}
