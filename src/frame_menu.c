@@ -1,21 +1,29 @@
+#include "frame_menu.h"
+
 #include "application.h"
+#include "tools.h"
 
 void frameMenu(void)
 {
-    /* drawingMidpoint(); */
-    SDL_Surface * text_surface = TTF_RenderText_Solid(application.font, "Play", (SDL_Color) {255, 0, 0});
-    SDL_Rect draw_rect = {
-        (application.surface->w - text_surface->w) / 2,
-        application.surface->h / 2 - text_surface->h,
-        text_surface->w,
-        text_surface->h
-    };
-    SDL_Color color = {0, 0, 255};
-    drawOutlineOfSurface(draw_rect, color);
-    SDL_BlitSurface(text_surface, NULL, application.surface, 
-                    (SDL_Rect *) & (SDL_Rect) {(application.surface->w - text_surface->w) / 2,
-                    application.surface->h / 2 - text_surface->h,
-                    application.surface->w,
-                    application.surface->h});
+    SDL_Color button_color = {255, 0, 0};
+    DrawButtonResult play_result, quit_result;
+    int y = application.surface->h / 2;
+    play_result = drawButton((application.surface->w) / 2,
+        y,
+        "Play",
+        button_color);
+    y += play_result.height;
+    if (play_result.is_clicked)        
+    {
+        application.game_screen = GAME_SCREEN_MENU;
+    }
+    quit_result = drawButton((application.surface->w) / 2,
+        y,
+        "Quit",
+        button_color);
+    if (quit_result.is_clicked)
+    {
+        application._is_playing = FALSE;
+    }
     return;
 }

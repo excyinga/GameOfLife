@@ -25,8 +25,10 @@ struct StApplication
     SDL_Window * window;
     SDL_Surface * surface;
     TTF_Font * font;
-    bool _is_playing;
     GameScreen game_screen;
+    int mouse_x, mouse_y;
+    bool _is_playing;
+    bool is_click;
 };
 
 extern Application application;

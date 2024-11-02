@@ -2,6 +2,9 @@
 
 #include "application.h"
 
+#include "frame_menu.h"
+#include "tools.h"
+
 int main(int, char **)
 {
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS))
@@ -30,8 +33,10 @@ int main(int, char **)
         return 1;
     }
     SDL_Event event;
+    int x, y;
     for (; application._is_playing;)
     {
+        application.is_click = FALSE;
         while (SDL_PollEvent(&event))
         {
             if (event.type == SDL_QUIT)
@@ -39,8 +44,19 @@ int main(int, char **)
                 application._is_playing = FALSE;
                 break;
             }
+            else if (event.type == SDL_MOUSEBUTTONUP && event.button.button == SDL_BUTTON_LEFT)
+            {
+                application.is_click = TRUE;
+            }
         }
-        frameMenu();
+        SDL_GetMouseState(&x, &y);
+        application.mouse_x = x;
+        application.mouse_y = y;
+        SDL_FillRect(application.surface, NULL, 0);
+        if (application.game_screen == GAME_SCREEN_MENU)
+        {
+            frameMenu();
+        }    
         SDL_UpdateWindowSurface(application.window);
     }
     return 0;
