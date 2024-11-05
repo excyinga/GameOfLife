@@ -36,10 +36,15 @@ void drawOutlineOfSurface(SDL_Rect rect, SDL_Color color)
     }
     return;
 }
-DrawButtonResult drawButton(int x, int y, char * text, SDL_Color color)
+DrawButtonResult drawButton(int x, int y, char * text, SDL_Color color, bool centered, int number_in_order)
 {
     SDL_Surface * text_surface = TTF_RenderText_Solid(application.font, text, color);
     SDL_Rect rect = {x, y, text_surface->w, text_surface->h};
+    if (centered)
+    {
+        rect.x -= text_surface->w / 2;
+        rect.y += number_in_order * text_surface->h;
+    }
     SDL_BlitSurface(text_surface, NULL, application.surface, &rect);
     DrawButtonResult result;
     result.x = rect.x;
