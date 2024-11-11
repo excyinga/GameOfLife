@@ -2,6 +2,6 @@
 #define _FRAME_MENU_H_
 #pragma once
 
-void frameMenu(void);
+void frameGrid(void);
 
 #endif

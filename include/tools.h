@@ -13,3 +13,4 @@ struct DrawButtonResult
 };
 
 DrawButtonResult drawButton(int x, int y, char * text, SDL_Color color, bool centered, int number_in_order);
+void drawGrid(int grid_amount);

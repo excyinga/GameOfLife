@@ -3,6 +3,7 @@
 #include "application.h"
 
 #include "frame_menu.h"
+#include "frame_grid.h"
 #include "tools.h"
 
 int main(int, char **)
@@ -48,6 +49,11 @@ int main(int, char **)
             {
                 application.is_click = TRUE;
             }
+            else if (event.type == SDL_KEYDOWN && application.game_screen == GAME_SCREEN_GRID)
+            {
+                if (event.key.keysym.sym == SDLK_ESCAPE)
+                    application.game_screen = GAME_SCREEN_MENU;
+            }
         }
         SDL_GetMouseState(&x, &y);
         application.mouse_x = x;
@@ -56,7 +62,11 @@ int main(int, char **)
         if (application.game_screen == GAME_SCREEN_MENU)
         {
             frameMenu();
-        }    
+        }
+        else
+        {
+            frameGrid();
+        }
         SDL_UpdateWindowSurface(application.window);
     }
     return 0;

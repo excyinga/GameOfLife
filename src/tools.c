@@ -64,3 +64,33 @@ DrawButtonResult drawButton(int x, int y, char * text, SDL_Color color, bool cen
     }
     return result;
 }
+void setPixel(int x, int y, int color, SDL_Surface * surface)
+{
+    if (x < 0 || x > surface->w || y < 0 || y > surface->h)
+    {
+        return;
+    }
+    ((int *) surface->pixels)[surface->pitch / 4 * y + x] = color;
+    return;
+}
+void drawGrid(int grid_amount)
+{
+    int x = 0;
+    int y = 0;
+    for (; x <= grid_amount; x++)
+    {
+        for (; y < application.surface->h; y++)
+        {
+            if (x == grid_amount)
+            {
+                setPixel(application.surface->w / grid_amount * x - 1, y, 0xFFFFFF, application.surface);
+            }
+            else
+            {
+                printf("X:%d w:%d grid_amount:%d\n", x, application.surface->w, grid_amount);
+                setPixel(application.surface->w / grid_amount * x, y, 0xFFFFFF, application.surface);
+            }
+        }
+    }
+    return;
+}
