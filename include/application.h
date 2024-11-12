@@ -9,6 +9,7 @@
 
 #define WINDOW_W    1280
 #define WINDOW_H    720
+#define GRID_AMOUNT 10
 
 typedef struct StApplication Application;
 
@@ -32,5 +33,6 @@ struct StApplication
 };
 
 extern Application application;
+bool grid_cells[GRID_AMOUNT * GRID_AMOUNT];
 
 #endif

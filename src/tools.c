@@ -52,9 +52,7 @@ DrawButtonResult drawButton(int x, int y, char * text, SDL_Color color, bool cen
     result.width = rect.w;
     result.height = rect.h;
     SDL_FreeSurface(text_surface); 
-    if (application.is_click &&
-        application.mouse_x >= rect.x && application.mouse_x <= rect.x + rect.w &&
-        application.mouse_y >= rect.y && application.mouse_y <= rect.y + rect.h)
+    if (application.is_click && IsInRect(rect, application.mouse_x, application.mouse_y))
     {
         result.is_clicked = TRUE;
     }
@@ -75,22 +73,51 @@ void setPixel(int x, int y, int color, SDL_Surface * surface)
 }
 void drawGrid(int grid_amount)
 {
-    int x = 0;
-    int y = 0;
-    for (; x <= grid_amount; x++)
+    for (int cell_index = 0; cell_index <= grid_amount; cell_index++)
     {
-        for (; y < application.surface->h; y++)
+        for (int y = 0; y < application.surface->h; y++)
         {
-            if (x == grid_amount)
+            if (cell_index == grid_amount)
             {
-                setPixel(application.surface->w / grid_amount * x - 1, y, 0xFFFFFF, application.surface);
+                setPixel(application.surface->w / grid_amount * cell_index - 1, y, 0xFFFFFF, application.surface);
             }
             else
             {
-                printf("X:%d w:%d grid_amount:%d\n", x, application.surface->w, grid_amount);
-                setPixel(application.surface->w / grid_amount * x, y, 0xFFFFFF, application.surface);
+                setPixel(application.surface->w / grid_amount * cell_index, y, 0xFFFFFF, application.surface);
             }
         }
     }
+    for (int cell_index = 0; cell_index <= grid_amount; cell_index++)
+    {
+        for (int x = 0; x < application.surface->w; x++)
+        {
+            if (cell_index == grid_amount)
+            {
+                setPixel(x, application.surface->h / grid_amount * cell_index - 1, 0xFFFFFF, application.surface);
+            }
+            else
+            {
+                setPixel(x, application.surface->h / grid_amount * cell_index, 0xFFFFFF, application.surface);
+            }
+        }
+    }
+    SDL_Rect rect;
+    for (int i = 0; i < grid_amount * grid_amount; i++)
+    {
+        
+    }
     return;
+}
+void clearScreen(SDL_Surface * surface, int color)
+{
+    for (int x = 0; x < surface->w * surface->h; x++)
+        ((int *) surface->pixels)[x] = color;
+    return;
+}
+bool IsInRect(SDL_Rect rect, int x, int y)
+{
+    if (x >= rect.x && x <= rect.x + rect.w && y >= rect.y && y <= rect.y + rect.h)
+        return TRUE;
+    else
+        return FALSE;
 }

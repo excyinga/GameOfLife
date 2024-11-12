@@ -3,6 +3,7 @@
 
 void frameGrid(void)
 {
-    drawGrid(20);
+    clearScreen(application.surface, 0x00);
+    drawGrid(GRID_AMOUNT);
     return;
 }
