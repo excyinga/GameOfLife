@@ -33,6 +33,7 @@ struct StApplication
 };
 
 extern Application application;
-bool grid_cells[GRID_AMOUNT * GRID_AMOUNT];
+
+extern bool grid_cells[GRID_AMOUNT * GRID_AMOUNT];
 
 #endif

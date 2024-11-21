@@ -3,6 +3,7 @@
 #include "application.h"
 
 SDL_Color BLACK = {0, 0, 0};
+int RED = 0xFF0000;
 
 void drawMidpoint(void)
 {
@@ -73,17 +74,19 @@ void setPixel(int x, int y, int color, SDL_Surface * surface)
 }
 void drawGrid(int grid_amount)
 {
+    int cell_width = application.surface->w / grid_amount;
+    int cell_height = application.surface->h / grid_amount;
     for (int cell_index = 0; cell_index <= grid_amount; cell_index++)
     {
         for (int y = 0; y < application.surface->h; y++)
         {
             if (cell_index == grid_amount)
             {
-                setPixel(application.surface->w / grid_amount * cell_index - 1, y, 0xFFFFFF, application.surface);
+                setPixel(cell_width * cell_index - 1, y, 0xFFFFFF, application.surface);
             }
             else
             {
-                setPixel(application.surface->w / grid_amount * cell_index, y, 0xFFFFFF, application.surface);
+                setPixel(cell_width * cell_index, y, 0xFFFFFF, application.surface);
             }
         }
     }
@@ -93,18 +96,29 @@ void drawGrid(int grid_amount)
         {
             if (cell_index == grid_amount)
             {
-                setPixel(x, application.surface->h / grid_amount * cell_index - 1, 0xFFFFFF, application.surface);
+                setPixel(x, cell_height * cell_index - 1, 0xFFFFFF, application.surface);
             }
             else
             {
-                setPixel(x, application.surface->h / grid_amount * cell_index, 0xFFFFFF, application.surface);
+                setPixel(x, cell_height * cell_index, 0xFFFFFF, application.surface);
             }
         }
     }
     SDL_Rect rect;
-    for (int i = 0; i < grid_amount * grid_amount; i++)
+    for (int cell_y = 0; cell_y < grid_amount; cell_y++)
     {
-        
+        for (int cell_x = 0; cell_x < grid_amount; cell_x++)
+        {
+            rect = (SDL_Rect) {cell_x * cell_width + 1, cell_y * cell_height + 1, cell_width - 1, cell_height - 1};
+            if (IsInRect(rect, application.mouse_x, application.mouse_y) && application.is_click)
+            {
+                grid_cells[cell_y * grid_amount + cell_x] = !grid_cells[cell_y * grid_amount + cell_x]; 
+            }
+            if (grid_cells[cell_y * grid_amount + cell_x])
+            {
+                drawRect(application.surface, rect, RED);
+            }
+        }
     }
     return;
 }
@@ -120,4 +134,15 @@ bool IsInRect(SDL_Rect rect, int x, int y)
         return TRUE;
     else
         return FALSE;
+}
+void drawRect(SDL_Surface * surface, SDL_Rect rect, int color)
+{
+    for (int y = rect.y; y < rect.y + rect.h; y++)
+    {
+        for (int x = rect.x; x < rect.x + rect.w; x++)
+        {
+            setPixel(x, y, color, surface);
+        }
+    }
+    return;
 }
