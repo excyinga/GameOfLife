@@ -6,7 +6,7 @@
 #include "tools.h"
 #include "types.h"
 
-int main()
+int main(int, char **)
 {
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS))
     {
