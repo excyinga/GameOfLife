@@ -12,7 +12,11 @@ void frameGrid(void)
     drawGrid(GRID_AMOUNT);
     if (game_start)
     {
-        gameLogic();
+        if (application.current_time_ms - application.game_logic_timer >= 500)
+        {
+            gameLogic();
+            application.game_logic_timer = application.current_time_ms;
+        }
     }
     return;
 }

@@ -30,6 +30,8 @@ struct StApplication
     int mouse_x, mouse_y;
     bool _is_playing;
     bool is_click;
+    unsigned int current_time_ms;
+    unsigned int game_logic_timer;
 };
 
 extern Application application;

@@ -37,6 +37,7 @@ int main(int, char **)
     int x, y;
     for (; application._is_playing;)
     {
+        application.current_time_ms = SDL_GetTicks();
         application.is_click = FALSE;
         while (SDL_PollEvent(&event))
         {
@@ -52,8 +53,16 @@ int main(int, char **)
             else if (event.type == SDL_KEYDOWN && application.game_screen == GAME_SCREEN_GRID)
             {
                 if (event.key.keysym.sym == SDLK_ESCAPE)
+                {
                     application.game_screen = GAME_SCREEN_MENU;
-                else if (event.key.keysym.sym == SDLK_KP_ENTER)
+                    int i = 0;
+                    for (; i < GRID_AMOUNT * GRID_AMOUNT; i++)
+                    {
+                        grid_cells[i] = tmp_grid[i] = 0;
+                    }
+                    game_start = FALSE;
+                }
+                else if (event.key.keysym.sym == SDLK_RETURN)
                     game_start = !game_start;
             }
         }
@@ -67,9 +76,6 @@ int main(int, char **)
         }
         else
         {
-            int i = 0;
-            for (; i < GRID_AMOUNT * GRID_AMOUNT; i++)
-                grid_cells[i] = tmp_grid[i] = FALSE;
             frameGrid();
         }
         SDL_UpdateWindowSurface(application.window);

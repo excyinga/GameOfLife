@@ -112,9 +112,7 @@ void drawGrid(int grid_amount)
             rect = (SDL_Rect) {cell_x * cell_width + 1, cell_y * cell_height + 1, cell_width - 1, cell_height - 1};
             if (IsInRect(rect, application.mouse_x, application.mouse_y) && application.is_click)
             {
-                printf("Before grid_cells[cell_y * grid_amount + cell_x]: %d\n", grid_cells[cell_y * grid_amount + cell_x]);
                 grid_cells[cell_y * grid_amount + cell_x] = !grid_cells[cell_y * grid_amount + cell_x]; 
-                printf("After grid_cells[cell_y * grid_amount + cell_x]: %d\n", grid_cells[cell_y * grid_amount + cell_x]);
             }
             if (grid_cells[cell_y * grid_amount + cell_x])
             {
