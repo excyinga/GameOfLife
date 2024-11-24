@@ -1,6 +1,7 @@
 #include "tools.h"
 
 #include "application.h"
+#include "frame_grid.h"
 
 SDL_Color BLACK = {0, 0, 0};
 int RED = 0xFF0000;
@@ -110,7 +111,7 @@ void drawGrid(int grid_amount)
         for (int cell_x = 0; cell_x < grid_amount; cell_x++)
         {
             rect = (SDL_Rect) {cell_x * cell_width + 1, cell_y * cell_height + 1, cell_width - 1, cell_height - 1};
-            if (IsInRect(rect, application.mouse_x, application.mouse_y) && application.is_click)
+            if (IsInRect(rect, application.mouse_x, application.mouse_y) && application.is_click && !game_start)
             {
                 grid_cells[cell_y * grid_amount + cell_x] = !grid_cells[cell_y * grid_amount + cell_x]; 
             }
