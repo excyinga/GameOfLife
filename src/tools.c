@@ -73,35 +73,35 @@ void setPixel(int x, int y, int color, SDL_Surface * surface)
     ((int *) surface->pixels)[surface->pitch / 4 * y + x] = color;
     return;
 }
-void drawGrid(int grid_amount)
+void drawGrid(int grid_amount, int start_x, int start_y, int width_in_pixels, int height_in_pixels)
 {
-    int cell_width = application.surface->w / grid_amount;
-    int cell_height = application.surface->h / grid_amount;
+    float cell_width = width_in_pixels / grid_amount;
+    float cell_height = height_in_pixels / grid_amount;
     for (int cell_index = 0; cell_index <= grid_amount; cell_index++)
     {
-        for (int y = 0; y < application.surface->h; y++)
+        for (int y = 0; y < height_in_pixels; y++)
         {
             if (cell_index == grid_amount)
             {
-                setPixel(cell_width * cell_index - 1, y, 0xFFFFFF, application.surface);
+                setPixel( (int) (cell_width * cell_index) - 1 + start_x, y + start_y, 0xFFFFFF, application.surface);
             }
             else
             {
-                setPixel(cell_width * cell_index, y, 0xFFFFFF, application.surface);
+                setPixel((int) (cell_width * cell_index) + start_x, y + start_y, 0xFFFFFF, application.surface);
             }
         }
     }
     for (int cell_index = 0; cell_index <= grid_amount; cell_index++)
     {
-        for (int x = 0; x < application.surface->w; x++)
+        for (int x = 0; x < width_in_pixels; x++)
         {
             if (cell_index == grid_amount)
             {
-                setPixel(x, cell_height * cell_index - 1, 0xFFFFFF, application.surface);
+                setPixel(x + start_x, cell_height * cell_index - 1 + start_y, 0xFFFFFF, application.surface);
             }
             else
             {
-                setPixel(x, cell_height * cell_index, 0xFFFFFF, application.surface);
+                setPixel(x + start_x, cell_height * cell_index + start_y, 0xFFFFFF, application.surface);
             }
         }
     }
@@ -110,7 +110,7 @@ void drawGrid(int grid_amount)
     {
         for (int cell_x = 0; cell_x < grid_amount; cell_x++)
         {
-            rect = (SDL_Rect) {cell_x * cell_width + 1, cell_y * cell_height + 1, cell_width - 1, cell_height - 1};
+            rect = (SDL_Rect) {cell_x * cell_width + 1 + start_x, cell_y * cell_height + 1 + start_y, cell_width - 1, cell_height - 1};
             if (IsInRect(rect, application.mouse_x, application.mouse_y) && application.is_click && !game_start)
             {
                 grid_cells[cell_y * grid_amount + cell_x] = !grid_cells[cell_y * grid_amount + cell_x]; 

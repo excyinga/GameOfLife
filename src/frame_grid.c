@@ -9,7 +9,7 @@ extern void gameLogic(void);
 void frameGrid(void)
 {
     clearScreen(application.surface, 0x00);
-    drawGrid(GRID_AMOUNT);
+    drawGrid(GRID_AMOUNT, 10, 10, WINDOW_W - WINDOW_W / 3 - 20, WINDOW_H - WINDOW_H / 3 - 20);
     if (game_start)
     {
         if (application.current_time_ms - application.game_logic_timer >= 500)

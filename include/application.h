@@ -9,7 +9,7 @@
 
 #define WINDOW_W    1280
 #define WINDOW_H    720
-#define GRID_AMOUNT 10
+#define GRID_AMOUNT 25
 
 typedef struct StApplication Application;
 

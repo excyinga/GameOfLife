@@ -46,7 +46,7 @@ int main(int, char **)
                 application._is_playing = FALSE;
                 break;
             }
-            else if (event.type == SDL_MOUSEBUTTONUP && event.button.button == SDL_BUTTON_LEFT) /* ??? */
+            else if (event.type == SDL_MOUSEBUTTONUP && event.button.button == SDL_BUTTON_LEFT)
             {
                 application.is_click = TRUE;
             }
