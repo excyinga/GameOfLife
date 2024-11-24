@@ -1,12 +1,12 @@
 #include <stdio.h>
 
 #include "application.h"
-
 #include "frame_menu.h"
 #include "frame_grid.h"
 #include "tools.h"
+#include "types.h"
 
-int main(int, char **)
+int main()
 {
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS))
     {
@@ -45,7 +45,7 @@ int main(int, char **)
                 application._is_playing = FALSE;
                 break;
             }
-            else if (event.type == SDL_MOUSEBUTTONUP && event.button.button == SDL_BUTTON_LEFT)
+            else if (event.type == SDL_MOUSEBUTTONUP && event.button.button == SDL_BUTTON_LEFT) /* ??? */
             {
                 application.is_click = TRUE;
             }
@@ -53,6 +53,8 @@ int main(int, char **)
             {
                 if (event.key.keysym.sym == SDLK_ESCAPE)
                     application.game_screen = GAME_SCREEN_MENU;
+                else if (event.key.keysym.sym == SDLK_KP_ENTER)
+                    game_start = !game_start;
             }
         }
         SDL_GetMouseState(&x, &y);
@@ -65,6 +67,9 @@ int main(int, char **)
         }
         else
         {
+            int i = 0;
+            for (; i < GRID_AMOUNT * GRID_AMOUNT; i++)
+                grid_cells[i] = tmp_grid[i] = FALSE;
             frameGrid();
         }
         SDL_UpdateWindowSurface(application.window);
